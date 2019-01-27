@@ -1,7 +1,7 @@
 PG_DATA=pgdata
 PG_USER=postgres
 PG_PASS=postgres
-PG_PORT=5432
+PG_PORT=15432
 PG_URI=postgres://$(PG_USER):$(PG_PASS)@localhost:$(PG_PORT)/$(PG_DATA)
 DOCKER_PG_NAME=pg-skeleton
 
@@ -20,8 +20,8 @@ run-sql-on-db:
 initialize-db:
 	$(MAKE) run-sql-on-db SQL=initialize.sql
 
-feed-data-to-db:
-	$(MAKE) run-sql-on-db SQL=demo_data.sql
+feed-test-data-to-db:
+	$(MAKE) run-sql-on-db SQL=tests/data/test_data.sql
 
 connect-db:
 	docker run -it --rm -e PGPASSWORD=$(PG_PASS) --link $(DOCKER_PG_NAME):$(DOCKER_PG_NAME) postgres psql -h $(DOCKER_PG_NAME) -U $(PG_USER) -d $(PG_DATA)
@@ -33,4 +33,4 @@ prepare-test:
 	$(MAKE) restart-db
 	sleep 5
 	$(MAKE) initialize-db
-	$(MAKE) feed-data-to-db
+	$(MAKE) feed-test-data-to-db

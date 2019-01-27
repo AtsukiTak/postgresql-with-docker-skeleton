@@ -1,3 +1,4 @@
 CREATE TABLE skeleton (
-  id      integer primary key,
+  id      integer PRIMARY KEY,
+  message text NOT NULL
 );
